@@ -120,9 +120,9 @@
 
     <div class="sidebar">
         <h2>📊 Live Feeds</h2>
-        <button class="league-btn active" onclick="connectLiveAPI('4387', 'NBA Basketball', this)">🏀 NBA Basketball</button>
-        <button class="league-btn" onclick="connectLiveAPI('4391', 'NFL Football', this)">🏈 NFL Football</button>
-        <button class="league-btn" onclick="connectLiveAPI('4424', 'MLB Baseball', this)">⚾ MLB Baseball</button>
+        <button class="league-btn active" onclick="connectLiveAPI('NBA', 'NBA Basketball', this)">🏀 NBA Basketball</button>
+        <button class="league-btn" onclick="connectLiveAPI('NFL', 'NFL Football', this)">🏈 NFL Football</button>
+        <button class="league-btn" onclick="connectLiveAPI('MLB', 'MLB Baseball', this)">⚾ MLB Baseball</button>
         <button class="league-btn" onclick="connectLiveAPI('4328', 'English Premier League', this)">⚽ Premier League</button>
     </div>
 
@@ -138,10 +138,10 @@
 
     <script>
         window.onload = function() {
-            connectLiveAPI('4387', 'NBA Basketball', document.querySelector('.league-btn.active'));
+            connectLiveAPI('NBA', 'NBA Basketball', document.querySelector('.league-btn.active'));
         };
 
-        function connectLiveAPI(leagueId, leagueName, controlBtn) {
+        function connectLiveAPI(leagueIdentifier, leagueName, controlBtn) {
             document.querySelectorAll('.league-btn').forEach(btn => btn.classList.remove('active'));
             controlBtn.classList.add('active');
 
@@ -153,10 +153,17 @@
 
             document.getElementById('dashboard-title').innerText = leagueName;
 
-            // Connecting directly to an open mirror database bypass proxy to prevent CORS blocks
-            const apiURL = `https://corsproxy.io/?` + encodeURIComponent(`https://www.thesportsdb.com/api/v1/json/3/lookup_all_teams.php?id=${leagueId}`);
+            // CORRECTED ENDPOINT ROUTING LOGIC
+            let targetURL = '';
+            if (leagueIdentifier === 'NBA' || leagueIdentifier === 'NFL' || leagueIdentifier === 'MLB') {
+                targetURL = `https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${leagueIdentifier}`;
+            } else {
+                targetURL = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_teams.php?id=${leagueIdentifier}`;
+            }
 
-            fetch(apiURL)
+            const proxyAPI = `https://corsproxy.io/?` + encodeURIComponent(targetURL);
+
+            fetch(proxyAPI)
                 .then(res => res.json())
                 .then(data => {
                     spinner.style.display = 'none';
@@ -165,13 +172,13 @@
                         return;
                     }
 
-                    // Loop through EVERY SINGLE TEAM in the live database automatically
+                    // Loop through EVERY SINGLE REAL TEAM returned from the database
                     data.teams.forEach(team => {
                         const cardElement = document.createElement('div');
                         cardElement.className = 'card';
                         
                         cardElement.innerHTML = `
-                            <img src="${team.strBadge}/preview" alt="Logo">
+                            <img src="${team.strBadge}/preview" alt="Logo" onerror="this.src='https://via.placeholder.com/70?text=No+Logo'">
                             <h3>${team.strTeam}</h3>
                             <p><span class="highlight-text">🏟️ Stadium:</span> ${team.strStadium || 'N/A'}</p>
                             <p><span class="highlight-text">📍 Location:</span> ${team.strStadiumLocation || 'Global Rec'}</p>
