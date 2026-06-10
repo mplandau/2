@@ -1,119 +1,178 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Sports Data Hub</title>
+    <title>Global Sports Hub Pro</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: #ffffff;
             margin: 0;
-            padding: 20px;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
         }
-        header {
-            background-color: #1f1f1f;
-            padding: 30px 20px;
-            border-radius: 12px;
-            text-align: center;
-            border-bottom: 4px solid #00e676;
-            box-shadow: 0 4px 15px rgba(0,230,118,0.1);
+
+        /* Interactive Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: #1a1a1a;
+            border-right: 2px solid #00e676;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 10px;
         }
-        h1 {
-            margin: 0;
+        .sidebar h2 {
             color: #00e676;
-            font-size: 2.5rem;
+            font-size: 1.4rem;
+            text-align: center;
+            margin-bottom: 25px;
         }
-        header p {
+        .league-btn {
+            background: none;
+            border: 1px solid #333;
             color: #aaa;
-            font-size: 1.1rem;
-            margin-top: 10px;
-        }
-        .container {
-            max-width: 1100px;
-            margin: 30px auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-        .card {
-            background-color: #1e1e1e;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            padding: 12px 15px;
             text-align: left;
-            border: 1px solid #2d2d2d;
-            transition: transform 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            border-color: #00e676;
-        }
-        .card h3 {
-            margin-top: 0;
-            color: #29b6f6;
-            font-size: 1.5rem;
-            border-bottom: 1px solid #333;
-            padding-bottom: 10px;
-        }
-        .data-list {
-            list-style: none;
-            padding: 0;
-            margin: 15px 0 0 0;
-        }
-        .data-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #2a2a2a;
-            font-size: 0.95rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
             display: flex;
             justify-content: space-between;
         }
-        .data-list li:last-child {
-            border-bottom: none;
-        }
-        .highlight {
-            color: #00e676;
+        .league-btn:hover, .league-btn.active {
+            background-color: #00e676;
+            color: #121212;
             font-weight: bold;
+            border-color: #00e676;
+        }
+
+        /* Main Display Dashboard */
+        .main-content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: #121212;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,230,118,0.05);
+        }
+        header h1 { margin: 0; color: #fff; font-size: 2rem; }
+        header p { margin: 5px 0 0 0; color: #888; }
+
+        /* Team and Player Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #2d2d2d;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+        .card img {
+            max-width: 80px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+        .card h3 { margin: 10px 0 5px 0; font-size: 1.1rem; color: #29b6f6; }
+        .card p { margin: 0; color: #aaa; font-size: 0.9rem; }
+
+        /* Loading Spinner */
+        .loader {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #00e676;
+            margin-top: 50px;
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>🏆 Ultimate Sports Data & Analytics Hub</h1>
-        <p>Live trackers, historical stats, and deep analytics</p>
-    </header>
-
-    <div class="container">
-        <div class="card">
-            <h3>🏈 NFL Football</h3>
-            <ul class="data-list">
-                <li><span>Live Offseason Tracker</span> <span class="highlight">Active</span></li>
-                <li><span>Super Bowl Odds Leader</span> <span>KC Chiefs</span></li>
-                <li><span>Next Event</span> <span>Training Camp</span></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>🏀 NBA Basketball</h3>
-            <ul class="data-list">
-                <li><span>League Status</span> <span class="highlight">Offseason</span></li>
-                <li><span>Defending Champions</span> <span>Boston Celtics</span></li>
-                <li><span>Draft Analytics</span> <span>Data Loaded</span></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>⚾ MLB Baseball</h3>
-            <ul class="data-list">
-                <li><span>Season Status</span> <span class="highlight">Live Games</span></li>
-                <li><span>Division Leaders</span> <span>NYY / LAD</span></li>
-                <li><span>Stat Tracker</span> <span class="highlight">Online</span></li>
-            </ul>
-        </div>
+    <div class="sidebar">
+        <h2>🌍 Sports Leagues</h2>
+        <button class="league-btn active" onclick="fetchTeams('4387', this)">🏀 NBA Basketball</button>
+        <button class="league-btn" onclick="fetchTeams('4391', this)">🏈 NFL Football</button>
+        <button class="league-btn" onclick="fetchTeams('4424', this)">⚾ MLB Baseball</button>
+        <button class="league-btn" onclick="fetchTeams('4328', this)">⚽ English Premier League</button>
+        <button class="league-btn" onclick="fetchTeams('4335', this)">⚽ Spanish La Liga</button>
     </div>
+
+    <div class="main-content">
+        <header>
+            <h1 id="league-title">🏆 Global Teams & Player Profiles Hub</h1>
+            <p>Live automated data direct from the international sports database</p>
+        </header>
+
+        <div id="loader" class="loader">🔄 Pulling active team data...</div>
+        <div id="sports-grid" class="grid"></div>
+    </div>
+
+    <script>
+        // Auto-load NBA when the site first opens
+        window.onload = function() {
+            fetchTeams('4387', document.querySelector('.league-btn.active'));
+        };
+
+        function fetchTeams(leagueId, buttonElement) {
+            // Update active status UI on buttons
+            document.querySelectorAll('.league-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+
+            const grid = document.getElementById('sports-grid');
+            const loader = document.getElementById('loader');
+            
+            grid.innerHTML = ''; 
+            loader.style.display = 'block';
+
+            // Connect live to TheSportsDB free engine API
+            const apiUrl = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_teams.php?id=${leagueId}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    loader.style.display = 'none';
+                    if (!data.teams) {
+                        grid.innerHTML = '<p style="text-align:center; color:#ff5252;">No active team data found for this segment.</p>';
+                        return;
+                    }
+
+                    // Loop through every single team provided by the global feed
+                    data.teams.forEach(team => {
+                        const teamCard = document.createElement('div');
+                        teamCard.className = 'card';
+                        
+                        // Grab live dynamic elements like names, badges, and year founded
+                        teamCard.innerHTML = `
+                            <img src="${team.strBadge || 'https://via.placeholder.com/80'}" alt="${team.strTeam} Badge">
+                            <h3>${team.strTeam}</h3>
+                            <p>📍 ${team.strStadium || 'Stadium Data N/A'}</p>
+                            <p style="color:#666; font-size:0.8rem; margin-top:5px;">Est. ${team.strFormedYear || 'Unknown'}</p>
+                        `;
+                        grid.appendChild(teamCard);
+                    });
+                })
+                .catch(error => {
+                    loader.style.display = 'none';
+                    grid.innerHTML = '<p style="color:#ff5252;">Data feed link interrupted. Try clicking another league.</p>';
+                    console.error("API Error: ", error);
+                });
+        }
+    </script>
 
 </body>
 </html>
