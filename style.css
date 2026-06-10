@@ -204,3 +204,93 @@ header p {
     font-weight: 500;
     border: 1px solid #243047;
 }
+/* Horizontal Game Slider Styles */
+.calendar-title {
+    font-size: 0.75rem;
+    color: #707e94;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .calendar-title { max-width: 1200px; }
+}
+
+.calendar-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .calendar-strip { max-width: 1200px; }
+}
+
+/* Hide scrollbar tracks for clean app interface appearance */
+.calendar-strip::-webkit-scrollbar {
+    height: 4px;
+}
+.calendar-strip::-webkit-scrollbar-thumb {
+    background-color: #1e2633;
+    border-radius: 2px;
+}
+
+/* Compact Calendar Event Cards */
+.game-strip-card {
+    background-color: #121824;
+    border: 1px solid #1e2633;
+    border-radius: 6px;
+    padding: 10px 14px;
+    min-width: 150px;
+    flex-shrink: 0;
+}
+
+.game-strip-card.live {
+    border-color: #0099ff; /* Blue layout indicator for next up / game day */
+}
+
+.strip-status {
+    font-size: 0.65rem;
+    color: #0099ff;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.game-strip-card.live .strip-status {
+    color: #ff3b30; /* Red live indicator for tonight */
+}
+
+.strip-team {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin: 2px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.series-lead {
+    font-size: 0.7rem;
+    color: #707e94;
+    font-weight: 400;
+}
+
+.strip-venue {
+    font-size: 0.7rem;
+    color: #707e94;
+    margin-top: 4px;
+}
+
+.conditional .strip-venue {
+    color: #fab1a0; /* Marks conditional games if necessary */
+}
