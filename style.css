@@ -1,133 +1,90 @@
-/* theScore App Signature Theme */
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #0b0e14; /* theScore signature deep dark blue-grey */
-    color: #ffffff;
-    margin: 0;
-    padding: 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-/* App Header Styling */
-header {
-    margin-bottom: 24px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid #1e2633;
-}
-header h1 { 
-    margin: 0; 
-    font-size: 1.8rem; 
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-header p { 
-    margin: 5px 0 0 0; 
-    color: #707e94; 
-    font-size: 0.95rem;
-}
-
-/* Compact Mobile-First Feed Grid */
-.grid {
-    display: grid;
-    grid-template-columns: 1fr; /* Default to stacked list view like a mobile feed */
-    gap: 12px;
-    max-width: 600px; /* Centers the feed beautifully like the app layout */
-    margin: 0 auto;
+/* Horizontal Game Slider Styles */
+.calendar-title {
+    font-size: 0.75rem;
+    color: #707e94;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
 }
 
-/* Desktop Responsive View */
 @media (min-width: 768px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-        max-width: 1200px;
-    }
+    .calendar-title { max-width: 1200px; }
 }
 
-/* theScore App Scoreboard Card Strip */
-.card {
-    background-color: #121824; /* Elevated container blue */
+.calendar-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    margin-bottom: 24px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .calendar-strip { max-width: 1200px; }
+}
+
+/* Hide scrollbar tracks for clean app interface appearance */
+.calendar-strip::-webkit-scrollbar {
+    height: 4px;
+}
+.calendar-strip::-webkit-scrollbar-thumb {
+    background-color: #1e2633;
+    border-radius: 2px;
+}
+
+/* Compact Calendar Event Cards */
+.game-strip-card {
+    background-color: #121824;
     border: 1px solid #1e2633;
-    border-radius: 8px;
-    padding: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-    transition: background-color 0.2s;
-}
-.card:hover {
-    background-color: #171f2e; /* Subtle highlight on tap/hover */
+    border-radius: 6px;
+    padding: 10px 14px;
+    min-width: 150px;
+    flex-shrink: 0;
 }
 
-/* Header Info inside the card */
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #1e2633;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
+.game-strip-card.live {
+    border-color: #0099ff; /* Blue layout indicator for next up / game day */
 }
-.card h3 { 
-    margin: 0; 
-    font-size: 1.1rem; 
+
+.strip-status {
+    font-size: 0.65rem;
+    color: #0099ff;
     font-weight: 700;
-    color: #ffffff; 
-}
-.record-badge {
-    background-color: #1a2233;
-    color: #94a3b8;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 600;
+    margin-bottom: 4px;
 }
 
-/* Stat Rows Style */
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 0;
+.game-strip-card.live .strip-status {
+    color: #ff3b30; /* Red live indicator for tonight */
+}
+
+.strip-team {
     font-size: 0.9rem;
-}
-.stat-label { 
-    color: #707e94; 
-    font-weight: 500;
-}
-.stat-value { 
-    font-weight: 700; 
-    color: #ffffff; 
+    font-weight: 700;
+    margin: 2px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
-/* Roster / Key Players Section */
-.roster-section {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid #1e2633;
+.series-lead {
+    font-size: 0.7rem;
+    color: #707e94;
+    font-weight: 400;
 }
-.roster-title {
-    font-size: 0.75rem;
-    color: #0099ff; /* theScore Electric Blue accent */
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    display: block;
+
+.strip-venue {
+    font-size: 0.7rem;
+    color: #707e94;
+    margin-top: 4px;
 }
-.player-tag {
-    display: inline-block;
-    background-color: #1a2233;
-    color: #f1f5f9;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    margin: 3px 4px 3px 0;
-    font-weight: 500;
-    border: 1px solid #243047;
+
+.conditional .strip-venue {
+    color: #fab1a0; /* Marks conditional games if necessary */
 }
