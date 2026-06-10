@@ -1,5 +1,4 @@
-# 2
-sports data and history with analytics and scores# 2: Ultimate Sports Data & Analytics Hub
+# Ultimate Sports Data & Analytics Hub
 
 Welcome to the ultimate sports data, history, and analytics platform. This project aims to track, analyze, and display comprehensive data across all professional sports leagues.
 
@@ -12,4 +11,4 @@ Welcome to the ultimate sports data, history, and analytics platform. This proje
 ## 🛠️ Planned Tech Stack
 * **Frontend:** Web interface for interactive charts and scoreboards.
 * **Backend:** APIs to fetch and sync live sports data.
-* **Database:** Storage for historical player and team stats. updates across all perfesional  sports leagues 
+* **Database:** Storage for historical player and team stats.
