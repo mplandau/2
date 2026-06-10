@@ -4,14 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Analytics Hub</title>
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <h1>🏀 NBA Pro Analytics Hub</h1>
-        <p>Active team standings, core performance metrics, and roster selections.</p>
+        <p>Active team standings, core performance metrics, and upcoming game calendars.</p>
     </header>
+
+    <div class="calendar-title">🏆 2026 NBA FINALS SCHEDULE</div>
+    <div class="calendar-strip">
+        <div class="game-strip-card live">
+            <div class="strip-status">TONIGHT • 8:30 PM</div>
+            <div class="strip-team"><span>NYK</span> <span class="series-lead">(2-1)</span></div>
+            <div class="strip-team"><span>SAS</span></div>
+            <div class="strip-venue">Game 4 @ MSG</div>
+        </div>
+        <div class="game-strip-card">
+            <div class="strip-status">SAT, JUN 13 • 8:30 PM</div>
+            <div class="strip-team"><span>SAS</span></div>
+            <div class="strip-team"><span>NYK</span></div>
+            <div class="strip-venue">Game 5 @ San Antonio</div>
+        </div>
+        <div class="game-strip-card conditional">
+            <div class="strip-status">TUE, JUN 16 • 8:30 PM</div>
+            <div class="strip-team"><span>NYK</span></div>
+            <div class="strip-team"><span>SAS</span></div>
+            <div class="strip-venue">Game 6 @ MSG *</div>
+        </div>
+        <div class="game-strip-card conditional">
+            <div class="strip-status">FRI, JUN 19 • 8:30 PM</div>
+            <div class="strip-team"><span>SAS</span></div>
+            <div class="strip-team"><span>NYK</span></div>
+            <div class="strip-venue">Game 7 @ San Antonio *</div>
+        </div>
+    </div>
 
     <div id="nba-grid" class="grid"></div>
 
@@ -51,7 +79,7 @@
                 <div class="card-header">
                     <div>
                         <h3>${item.team}</h3>
-                        <span style="font-size:0.85rem; color:#72727a;">${item.division}</span>
+                        <span style="font-size:0.85rem; color:#707e94;">${item.division}</span>
                     </div>
                     <span class="record-badge">${item.marker}</span>
                 </div>
@@ -64,6 +92,5 @@
             container.appendChild(cardElement);
         });
     </script>
-
 </body>
 </html>
