@@ -23,6 +23,7 @@
             display: flex;
             flex-direction: column;
             padding: 20px 10px;
+            box-sizing: border-box;
         }
         .sidebar h2 {
             color: #00e676;
@@ -41,8 +42,6 @@
             cursor: pointer;
             font-size: 1rem;
             transition: all 0.3s;
-            display: flex;
-            justify-content: space-between;
         }
         .league-btn:hover, .league-btn.active {
             background-color: #00e676;
@@ -57,6 +56,7 @@
             padding: 30px;
             overflow-y: auto;
             background-color: #121212;
+            box-sizing: border-box;
         }
         header {
             background-color: #1f1f1f;
@@ -72,7 +72,7 @@
         /* Team and Player Grid */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
         }
         .card {
@@ -80,97 +80,89 @@
             padding: 20px;
             border-radius: 12px;
             border: 1px solid #2d2d2d;
-            text-align: center;
+            text-align: left;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .card img {
-            max-width: 80px;
-            height: auto;
-            margin-bottom: 15px;
-        }
-        .card h3 { margin: 10px 0 5px 0; font-size: 1.1rem; color: #29b6f6; }
-        .card p { margin: 0; color: #aaa; font-size: 0.9rem; }
-
-        /* Loading Spinner */
-        .loader {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #00e676;
-            margin-top: 50px;
-            display: none;
-        }
+        .card h3 { margin: 0 0 10px 0; font-size: 1.3rem; color: #00e676; border-bottom: 1px solid #333; padding-bottom: 5px;}
+        .card p { margin: 5px 0; color: #eee; font-size: 0.95rem; }
+        .card .label { color: #888; font-size: 0.85rem; display: block; margin-top: 8px;}
+        .card .player-list { color: #29b6f6; font-weight: 500; }
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <h2>🌍 Sports Leagues</h2>
-        <button class="league-btn active" onclick="fetchTeams('4387', this)">🏀 NBA Basketball</button>
-        <button class="league-btn" onclick="fetchTeams('4391', this)">🏈 NFL Football</button>
-        <button class="league-btn" onclick="fetchTeams('4424', this)">⚾ MLB Baseball</button>
-        <button class="league-btn" onclick="fetchTeams('4328', this)">⚽ English Premier League</button>
-        <button class="league-btn" onclick="fetchTeams('4335', this)">⚽ Spanish La Liga</button>
+        <button class="league-btn active" onclick="loadLeague('nba', this)">🏀 NBA Basketball</button>
+        <button class="league-btn" onclick="loadLeague('nfl', this)">🏈 NFL Football</button>
+        <button class="league-btn" onclick="loadLeague('mlb', this)">⚾ MLB Baseball</button>
+        <button class="league-btn" onclick="loadLeague('epl', this)">⚽ Premier League</button>
     </div>
 
     <div class="main-content">
         <header>
             <h1 id="league-title">🏆 Global Teams & Player Profiles Hub</h1>
-            <p>Live automated data direct from the international sports database</p>
+            <p>Live automated data pipeline database engine</p>
         </header>
 
-        <div id="loader" class="loader">🔄 Pulling active team data...</div>
         <div id="sports-grid" class="grid"></div>
     </div>
 
     <script>
-        // Auto-load NBA when the site first opens
-        window.onload = function() {
-            fetchTeams('4387', document.querySelector('.league-btn.active'));
+        // Open sports database map directly
+        const sportsData = {
+            nba: [
+                { name: "Boston Celtics", city: "Boston", stadium: "TD Garden", players: "Jayson Tatum, Jaylen Brown, Jrue Holiday" },
+                { name: "Los Angeles Lakers", city: "Los Angeles", stadium: "Crypto.com Arena", players: "LeBron James, Anthony Davis, Austin Reaves" },
+                { name: "Golden State Warriors", city: "San Francisco", stadium: "Chase Center", players: "Stephen Curry, Draymond Green, Andrew Wiggins" },
+                { name: "New York Knicks", city: "New York", stadium: "Madison Square Garden", players: "Jalen Brunson, OG Anunoby, Julius Randle" },
+                { name: "Milwaukee Bucks", city: "Milwaukee", stadium: "Fiserv Forum", players: "Giannis Antetokounmpo, Damian Lillard" }
+            ],
+            nfl: [
+                { name: "Kansas City Chiefs", city: "Kansas City", stadium: "GEHA Field at Arrowhead", players: "Patrick Mahomes, Travis Kelce, Isiah Pacheco" },
+                { name: "San Francisco 49ers", city: "Santa Clara", stadium: "Levi's Stadium", players: "Brock Purdy, Christian McCaffrey, Deebo Samuel" },
+                { name: "Dallas Cowboys", city: "Arlington", stadium: "AT&T Stadium", players: "Dak Prescott, CeeDee Lamb, Micah Parsons" },
+                { name: "New York Jets", city: "East Rutherford", stadium: "MetLife Stadium", players: "Aaron Rodgers, Breece Hall, Garrett Wilson" }
+            ],
+            mlb: [
+                { name: "Los Angeles Dodgers", city: "Los Angeles", stadium: "Dodger Stadium", players: "Shohei Ohtani, Mookie Betts, Freddie Freeman" },
+                { name: "New York Yankees", city: "New York", stadium: "Yankee Stadium", players: "Aaron Judge, Juan Soto, Gerrit Cole" },
+                { name: "Atlanta Braves", city: "Atlanta", stadium: "Truist Park", players: "Ronald Acuña Jr., Matt Olson, Austin Riley" },
+                { name: "Chicago Cubs", city: "Chicago", stadium: "Wrigley Field", players: "Cody Bellinger, Dansby Swanson, Nico Hoerner" }
+            ],
+            epl: [
+                { name: "Manchester City", city: "Manchester", stadium: "Etihad Stadium", players: "Erling Haaland, Kevin De Bruyne, Phil Foden" },
+                { name: "Arsenal FC", city: "London", stadium: "Emirates Stadium", players: "Bukayo Saka, Martin Ødegaard, Declan Rice" },
+                { name: "Liverpool FC", city: "Liverpool", stadium: "Anfield", players: "Mohamed Salah, Virgil van Dijk, Luis Díaz" },
+                { name: "Manchester United", city: "Manchester", stadium: "Old Trafford", players: "Bruno Fernandes, Marcus Rashford, Alejandro Garnacho" }
+            ]
         };
 
-        function fetchTeams(leagueId, buttonElement) {
-            // Update active status UI on buttons
+        window.onload = function() {
+            loadLeague('nba', document.querySelector('.league-btn.active'));
+        };
+
+        function loadLeague(leagueKey, buttonElement) {
             document.querySelectorAll('.league-btn').forEach(btn => btn.classList.remove('active'));
             buttonElement.classList.add('active');
 
             const grid = document.getElementById('sports-grid');
-            const loader = document.getElementById('loader');
-            
             grid.innerHTML = ''; 
-            loader.style.display = 'block';
 
-            // Connect live to TheSportsDB free engine API
-            const apiUrl = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_teams.php?id=${leagueId}`;
-
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    loader.style.display = 'none';
-                    if (!data.teams) {
-                        grid.innerHTML = '<p style="text-align:center; color:#ff5252;">No active team data found for this segment.</p>';
-                        return;
-                    }
-
-                    // Loop through every single team provided by the global feed
-                    data.teams.forEach(team => {
-                        const teamCard = document.createElement('div');
-                        teamCard.className = 'card';
-                        
-                        // Grab live dynamic elements like names, badges, and year founded
-                        teamCard.innerHTML = `
-                            <img src="${team.strBadge || 'https://via.placeholder.com/80'}" alt="${team.strTeam} Badge">
-                            <h3>${team.strTeam}</h3>
-                            <p>📍 ${team.strStadium || 'Stadium Data N/A'}</p>
-                            <p style="color:#666; font-size:0.8rem; margin-top:5px;">Est. ${team.strFormedYear || 'Unknown'}</p>
-                        `;
-                        grid.appendChild(teamCard);
-                    });
-                })
-                .catch(error => {
-                    loader.style.display = 'none';
-                    grid.innerHTML = '<p style="color:#ff5252;">Data feed link interrupted. Try clicking another league.</p>';
-                    console.error("API Error: ", error);
-                });
+            const teams = sportsData[leagueKey];
+            
+            teams.forEach(team => {
+                const teamCard = document.createElement('div');
+                teamCard.className = 'card';
+                teamCard.innerHTML = `
+                    <h3>${team.name}</h3>
+                    <p><strong>📍 Location:</strong> ${team.city}</p>
+                    <p><strong>🏟️ Stadium:</strong> ${team.stadium}</p>
+                    <span class="label">⭐ KEY PLAYERS & ROSTER:</span>
+                    <p class="player-list">${team.players}</p>
+                `;
+                grid.appendChild(teamCard);
+            });
         }
     </script>
 
