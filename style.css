@@ -1,0 +1,187 @@
+/* Premium Executive Color Palette & Architecture */
+:root {
+    --primary-bg: #fcfaf6;
+    --card-bg: #ffffff;
+    --dark-blue: #0f172a;
+    --gold: #f59e0b;
+    --orange: #ea580c;
+    --text-main: #334155;
+    --text-muted: #64748b;
+    --border-warm: #f1e7d8;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--primary-bg);
+    color: var(--text-main);
+}
+
+/* 1. SCOREBOARD TICKER */
+.ticker-container {
+    background-color: var(--dark-blue);
+    color: white;
+    padding: 12px 0;
+    overflow: hidden;
+    border-bottom: 4px solid var(--gold);
+}
+.ticker-wrapper {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.ticker-item {
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #1e293b;
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #334155;
+}
+.live-badge { color: #ef4444; font-weight: 800; }
+.final-badge { color: var(--gold); font-weight: 800; }
+.time-text { color: #94a3b8; font-size: 0.8rem; }
+
+/* 2. HERO HEADER */
+.main-header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    text-align: center;
+    position: relative;
+    border-bottom: 1px solid var(--border-warm);
+}
+.header-overlay {
+    padding: 50px 20px;
+    background: radial-gradient(circle at center, rgba(234, 88, 12, 0.08) 0%, transparent 70%);
+}
+.main-header h1 {
+    margin: 0;
+    font-size: 2.6rem;
+    letter-spacing: -1px;
+    color: #ffffff;
+}
+.main-header p {
+    margin: 8px 0 0 0;
+    color: var(--gold);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* 3. DYNAMIC MESH GRID LAYOUT */
+.main-layout {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 768px) {
+    .main-layout { grid-template-columns: 1fr; }
+}
+
+/* 4. SEARCH INTERFACE CARD */
+.search-card {
+    background-color: var(--card-bg);
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.02), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--border-warm);
+    margin-bottom: 25px;
+}
+.search-card h2 { margin: 0 0 8px 0; color: var(--dark-blue); font-size: 1.6rem; }
+.search-card p { margin: 0 0 20px 0; color: var(--text-muted); line-height: 1.5; }
+.search-bar-box input {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border-warm);
+    border-radius: 12px;
+    font-size: 1.1rem;
+    outline: none;
+    box-sizing: border-box;
+    background-color: #fdfdfd;
+    transition: all 0.2s ease;
+}
+.search-bar-box input:focus {
+    border-color: var(--orange);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.1);
+}
+
+/* 5. SYSTEM FEED CARDS */
+.status-card {
+    background-color: #fffbf5;
+    border: 1px dashed var(--gold);
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+}
+.status-card h3 { margin: 0 0 8px 0; color: var(--orange); }
+.status-card p { margin: 0; color: var(--text-main); line-height: 1.6; }
+.error-card { background-color: #fef2f2; border-color: #fca5a5; }
+.error-card h3 { color: #dc2626; }
+
+/* DYNAMIC INJECTED DATACARDS */
+.data-card {
+    background-color: var(--card-bg);
+    border-radius: 16px;
+    border: 1px solid var(--border-warm);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    margin-bottom: 25px;
+    overflow: hidden;
+}
+.card-header-banner {
+    background: linear-gradient(135deg, var(--dark-blue) 0%, #1e293b 100%);
+    color: white;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.card-header-banner h2 { margin: 0; font-size: 1.6rem; color: var(--gold); }
+.badge-type { background: var(--orange); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+
+.card-body-metrics {
+    padding: 25px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    background-color: #faf8f4;
+    border-bottom: 1px solid var(--border-warm);
+}
+.metric-box { background: white; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border-warm); }
+.metric-box span { display: block; font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: bold; }
+.metric-box strong { font-size: 1.1rem; color: var(--dark-blue); }
+
+.card-history-timeline { padding: 25px; }
+.card-history-timeline h3 { margin: 0 0 15px 0; color: var(--dark-blue); font-size: 1.2rem; }
+
+/* TABLE COMPONENT */
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #f1f5f9; }
+th { background-color: #f8fafc; color: var(--dark-blue); font-weight: 700; }
+tr:hover { background-color: #fffdf9; }
+
+/* SIDEBAR PANELS */
+.sidebar-section { display: flex; flex-direction: column; gap: 25px; }
+.sidebar-card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border-warm);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+.sidebar-card h3 { margin: 0 0 15px 0; color: var(--dark-blue); font-size: 1.2rem; border-bottom: 2px solid var(--primary-bg); padding-bottom: 8px; }
+.trending-item { margin-bottom: 15px; }
+.trending-item:last-child { margin-bottom: 0; }
+.trending-item h4 { margin: 0 0 4px 0; color: var(--orange); font-size: 1rem; }
+.trending-item p { margin: 0; font-size: 0.9rem; color: var(--text-muted); line-height: 1.4; }
+.status-widget p { font-size: 0.95rem; margin: 8px 0; }
+
+footer { text-align: center; padding: 30px; background-color: var(--dark-blue); color: #94a3b8; margin-top: 60px; font-size: 0.9rem; }
