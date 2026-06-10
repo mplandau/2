@@ -3,77 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Sports Analytics Engine</title>
+    <title>NBA Analytics Hub</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #0c0c0e;
             color: #ffffff;
             margin: 0;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Sidebar Controls */
-        .sidebar {
-            width: 280px;
-            background-color: #141416;
-            border-right: 1px solid #232326;
+            padding: 40px;
+            box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .sidebar h2 {
-            color: #00e676;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-        .league-btn {
-            background-color: #1c1c1f;
-            border: 1px solid #2d2d31;
-            color: #bcbcbc;
-            padding: 14px 16px;
-            text-align: left;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-        }
-        .league-btn:hover, .league-btn.active {
-            background-color: #00e676;
-            color: #0c0c0e;
-            border-color: #00e676;
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.2);
+            min-height: 100vh;
         }
 
-        /* Main Dashboard Canvas */
-        .main-content {
-            flex-grow: 1;
-            padding: 40px;
-            overflow-y: auto;
-            box-sizing: border-box;
-        }
         header {
             margin-bottom: 40px;
+            border-bottom: 2px solid #00e676;
+            padding-bottom: 20px;
         }
         header h1 { 
             margin: 0; 
-            font-size: 2.2rem; 
+            font-size: 2.5rem; 
             font-weight: 800;
+            color: #00e676;
         }
         header p { 
             margin: 8px 0 0 0; 
             color: #72727a; 
-            font-size: 1.05rem;
+            font-size: 1.1rem;
         }
 
-        /* Live Data Grid Matrix */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -85,114 +45,119 @@
             border-radius: 12px;
             border: 1px solid #232326;
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            text-align: center;
         }
-        .card img {
-            max-width: 70px;
-            height: auto;
-            margin-bottom: 15px;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #232326;
+            padding-bottom: 12px;
+            margin-bottom: 16px;
         }
         .card h3 { 
-            margin: 0 0 5px 0; 
-            font-size: 1.3rem; 
+            margin: 0; 
+            font-size: 1.4rem; 
             color: #ffffff; 
         }
-        .card p {
-            margin: 6px 0;
-            color: #72727a;
+        .record-badge {
+            background-color: #1c1c1f;
+            color: #00e676;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
             font-size: 0.95rem;
         }
-        .highlight-text {
-            color: #00e676;
-            font-weight: bold;
+        .stat-label { color: #72727a; }
+        .stat-value { font-weight: 600; color: #f4f4f5; }
+        
+        .roster-section {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px dashed #232326;
         }
-        .spinner {
-            text-align: center;
-            font-size: 1.2rem;
-            color: #00e676;
-            padding: 5px;
-            font-weight: bold;
-            display: none;
+        .roster-title {
+            font-size: 0.8rem;
+            color: #72727a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .player-tag {
+            display: inline-block;
+            background-color: #1c1c1f;
+            color: #29b6f6;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            margin: 4px 4px 4px 0;
+            border: 1px solid #232326;
         }
     </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>📊 Live Feeds</h2>
-        <button class="league-btn active" onclick="connectLiveAPI('NBA', 'NBA Basketball', this)">🏀 NBA Basketball</button>
-        <button class="league-btn" onclick="connectLiveAPI('NFL', 'NFL Football', this)">🏈 NFL Football</button>
-        <button class="league-btn" onclick="connectLiveAPI('MLB', 'MLB Baseball', this)">⚾ MLB Baseball</button>
-        <button class="league-btn" onclick="connectLiveAPI('4328', 'English Premier League', this)">⚽ Premier League</button>
-    </div>
+    <header>
+        <h1>🏀 NBA Pro Analytics Hub</h1>
+        <p>Active team standings, core performance metrics, and roster selections.</p>
+    </header>
 
-    <div class="main-content">
-        <header>
-            <h1 id="dashboard-title">Live Sports Database</h1>
-            <p id="dashboard-desc">Connecting to live global sports registries...</p>
-        </header>
-
-        <div id="loading-spinner" class="spinner">⚡ FETCHING LIVE LEAGUE REGISTRY...</div>
-        <div id="data-matrix-grid" class="grid"></div>
-    </div>
+    <div id="nba-grid" class="grid"></div>
 
     <script>
-        window.onload = function() {
-            connectLiveAPI('NBA', 'NBA Basketball', document.querySelector('.league-btn.active'));
-        };
+        const nbaTeams = [
+            { team: "Boston Celtics", division: "Eastern - Atlantic", marker: "64-18", stats: { PPG: "120.6", RPG: "46.3", APG: "26.9" }, roster: ["Jayson Tatum", "Jaylen Brown", "Kristaps Porziņģis", "Derrick White"] },
+            { team: "Los Angeles Lakers", division: "Western - Pacific", marker: "47-35", stats: { PPG: "118.0", RPG: "43.1", APG: "28.5" }, roster: ["LeBron James", "Anthony Davis", "D'Angelo Russell", "Austin Reaves"] },
+            { team: "Golden State Warriors", division: "Western - Pacific", marker: "46-36", stats: { PPG: "117.8", RPG: "46.7", APG: "29.3" }, roster: ["Stephen Curry", "Draymond Green", "Andrew Wiggins", "Jonathan Kuminga"] },
+            { team: "New York Knicks", division: "Eastern - Atlantic", marker: "50-32", stats: { PPG: "112.8", RPG: "45.2", APG: "24.4" }, roster: ["Jalen Brunson", "Karl-Anthony Towns", "OG Anunoby", "Josh Hart"] },
+            { team: "Oklahoma City Thunder", division: "Western - Northwest", marker: "57-25", stats: { PPG: "120.1", RPG: "42.0", APG: "27.1" }, roster: ["Shai Gilgeous-Alexander", "Chet Holmgren", "Jalen Williams"] },
+            { team: "Denver Nuggets", division: "Western - Northwest", marker: "57-25", stats: { PPG: "114.9", RPG: "44.4", APG: "29.5" }, roster: ["Nikola Jokić", "Jamal Murray", "Aaron Gordon", "Michael Porter Jr."] },
+            { team: "Dallas Mavericks", division: "Western - Southwest", marker: "50-32", stats: { PPG: "117.9", RPG: "42.9", APG: "25.7" }, roster: ["Luka Dončić", "Kyrie Irving", "Klay Thompson", "P.J. Washington"] },
+            { team: "Milwaukee Bucks", division: "Eastern - Central", marker: "49-33", stats: { PPG: "119.0", RPG: "44.2", APG: "26.2" }, roster: ["Giannis Antetokounmpo", "Damian Lillard", "Khris Middleton"] }
+        ];
 
-        function connectLiveAPI(leagueIdentifier, leagueName, controlBtn) {
-            document.querySelectorAll('.league-btn').forEach(btn => btn.classList.remove('active'));
-            controlBtn.classList.add('active');
-
-            const container = document.getElementById('data-matrix-grid');
-            const spinner = document.getElementById('loading-spinner');
+        const container = document.getElementById('nba-grid');
+        
+        nbaTeams.forEach(item => {
+            const cardElement = document.createElement('div');
+            cardElement.className = 'card';
             
-            container.innerHTML = '';
-            spinner.style.display = 'block';
-
-            document.getElementById('dashboard-title').innerText = leagueName;
-
-            // CORRECTED ENDPOINT ROUTING LOGIC
-            let targetURL = '';
-            if (leagueIdentifier === 'NBA' || leagueIdentifier === 'NFL' || leagueIdentifier === 'MLB') {
-                targetURL = `https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?l=${leagueIdentifier}`;
-            } else {
-                targetURL = `https://www.thesportsdb.com/api/v1/json/3/lookup_all_teams.php?id=${leagueIdentifier}`;
+            let dataMetricRows = '';
+            for (const [metricLabel, metricVal] of Object.entries(item.stats)) {
+                dataMetricRows += `
+                    <div class="stat-row">
+                        <span class="stat-label">${metricLabel}</span>
+                        <span class="stat-value">${metricVal}</span>
+                    </div>`;
             }
 
-            const proxyAPI = `https://corsproxy.io/?` + encodeURIComponent(targetURL);
+            let playerTags = '';
+            item.roster.forEach(player => {
+                playerTags += `<span class="player-tag">${player}</span>`;
+            });
 
-            fetch(proxyAPI)
-                .then(res => res.json())
-                .then(data => {
-                    spinner.style.display = 'none';
-                    if (!data.teams) {
-                        container.innerHTML = `<p style="color:#ff5252;">No active network response. Try another feed.</p>`;
-                        return;
-                    }
-
-                    // Loop through EVERY SINGLE REAL TEAM returned from the database
-                    data.teams.forEach(team => {
-                        const cardElement = document.createElement('div');
-                        cardElement.className = 'card';
-                        
-                        cardElement.innerHTML = `
-                            <img src="${team.strBadge}/preview" alt="Logo" onerror="this.src='https://via.placeholder.com/70?text=No+Logo'">
-                            <h3>${team.strTeam}</h3>
-                            <p><span class="highlight-text">🏟️ Stadium:</span> ${team.strStadium || 'N/A'}</p>
-                            <p><span class="highlight-text">📍 Location:</span> ${team.strStadiumLocation || 'Global Rec'}</p>
-                            <p><span class="highlight-text">🗓️ Founded:</span> Year ${team.strFormedYear || 'N/A'}</p>
-                        `;
-                        container.appendChild(cardElement);
-                    });
-                })
-                .catch(err => {
-                    spinner.style.display = 'none';
-                    container.innerHTML = `<p style="color:#ff5252;">Data stream blocked. Try another selection.</p>`;
-                    console.error(err);
-                });
-        }
+            cardElement.innerHTML = `
+                <div class="card-header">
+                    <div>
+                        <h3>${item.team}</h3>
+                        <span style="font-size:0.85rem; color:#72727a;">${item.division}</span>
+                    </div>
+                    <span class="record-badge">${item.marker}</span>
+                </div>
+                ${dataMetricRows}
+                <div class="roster-section">
+                    <span class="roster-title">Core Roster Selection</span>
+                    ${playerTags}
+                </div>
+            `;
+            container.appendChild(cardElement);
+        });
     </script>
 
 </body>
